@@ -1,0 +1,26 @@
+ssh(){
+
+_port=1
+
+echo -e "###### RULE NAME #####"
+
+fileexist $_portconf;
+if [ $exist -eq 1 ];
+then
+	paramfind "RULE" "$_portconf"
+	_RULEport="$_param"
+
+	if [ -z "$_RULEport" ];
+        then
+                echo -e "$_noport"
+        else
+                for i in $_RULEport
+                do
+                        _rules=$(iptables -t filter -A INPUT -p tcp --dport -j ACCEPT -m comment --comment "ALLOW RULE ON PORT $i" 2>&1 >/dev/null)
+                        _rulesvalue="Allow RULE for $port"
+                        validiprules "$_rules" "$_rulesvalue" "$_invalidmask" "$_invalidip" "$i"
+                done
+        fi
+
+fi
+}

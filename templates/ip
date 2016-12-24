@@ -1,0 +1,25 @@
+ssh(){
+
+_port=1
+
+echo -e "###### RULE NAME #####"
+
+fileexist $_ipconf;
+if [ $exist -eq 1 ];
+then
+        paramfind "RULENAME" "$_ipconf"
+	_RULEip="$_param"
+	if [ -z "$_RULEip" ];
+        then
+                echo -e "$_noip"
+        else
+                for i in $_RULEip
+                do
+                        _rules=$(iptables -t filter -A INPUT -p tcp --src $i -j ACCEPT -m comment --comment "ALLOW RULE FOR $i" 2>&1 >/dev/null)
+                        _rulesvalue="Allow RULE for IP $i"
+                        validiprules "$_rules" "$_rulesvalue" "$_invalidmask" "$_invalidip" "$i"
+                done
+        fi
+
+fi
+}
