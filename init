@@ -1,0 +1,71 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          fw
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start firewall at boot time
+### END INIT INFO
+
+
+###### CONFIG ######
+# adminip
+# monitoring
+# blacklist
+# DONT FORGET TO CREATE IT AND MODIFY THE $ADMINIP $MONITORINGIP $BLACKLIST bellow
+
+
+_basepath=""
+source "$_basepath"/includes/vars.sh
+source "$_functionpath"doblock.sh
+source "$_functionpath"dostatus.sh
+source "$_functionpath"dostop.sh
+source "$_functionpath"dostart.sh
+source "$_functionpath"fileexist.sh
+source "$_functionpath"rules.sh
+source "$_functionpath"validiprules.sh
+source "$_functionpath"paramfind.sh
+
+for i in $(cat "$_basepath"rules_ok)
+do
+	source "$_rulespath""$i".sh
+done
+
+###### END CONFIG ######
+
+if [ $# -eq 1 ];
+
+then
+ 	case "$1" in
+	start|restart)
+		echo -e "Starting firewall..."
+  	        dostop;
+		dostart;
+	        echo -e "$_accon""$_gcolor"" STARTED ""$_dcolor""$_accoff""Run 'fw status' command to see the rules applied."
+       	;;
+	stop)
+	  	echo -e "Stopping firewall..."
+	        dostop;
+	        echo -e "$_accon""$_rcolor"" STOPPPED ""$_dcolor""$_accoff""Here the rules applied : "
+                dostatus;
+        ;;
+        block)
+	 	doblock;
+  		echo -e "$_accon""$_gcolor"" BLOCKED ""$_dcolor""$_accoff""Firewall blocking now all traffic ! Heres the rules applied: "
+		dostatus;
+        ;;
+	status)
+		echo -e "Firewall rules activated :"
+		dostatus;
+	;;
+	*)
+		echo "Usage: $0 {start|stop|restart|block|status}"
+		exit 1
+	;;
+       esac
+else
+	echo "Usage: $0 {start|stop|restart|block|status}"
+fi
+exit 0;
