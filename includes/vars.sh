@@ -15,5 +15,5 @@ _portconf="$_basepath""portconf"
 _rulesapplied="$_dcolor""$_accon""$_gcolor"" APPLIED ""$_dcolor""$_accoff"
 _rulesnotapplied="$_dcolor""$_accon""$_rcolor"" NOT APPLIED ""$_dcolor""$_accoff"
 
-_nopip="$_rulesnotapplied""There is no ip found for this rule""$_dcolor"
+_noip="$_rulesnotapplied""There is no ip found for this rule""$_dcolor"
 _noport="$_rulesnotapplied""There is no port found for this rule""$_dcolor"
