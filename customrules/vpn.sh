@@ -1,6 +1,6 @@
 vpn(){
 
-#This rule will allow all UDP connection (inclunding ESP) for strongswann VPN in transport mode
+#This rule will allow all UDP connection (inclunding ESP) for strongswan VPN in transport mode
 
 echo "###### VPN TRANSPORT RULES #####"
 
