@@ -20,7 +20,7 @@ then
                 for i in $_icmpip
                 do
                         _rules=$(iptables -t filter -A INPUT -p icmp --src $i -j ACCEPT -m comment --comment "ICMP FOR IP : $i " 2>&1 >/dev/nul)
-                        _rulesvalue="Allow ICMP for for IP $i"
+                        _rulesvalue="Allow ICMP for IP $i"
                         validiprules "$_rules" "$_rulesvalue" "$_invalidmask" "$_invalidip" "$i"
                 done
         fi
