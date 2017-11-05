@@ -32,7 +32,7 @@ then
 
                       ##ESP
                       _inputesp=$(iptables -A INPUT -i eth0 --src $i -p esp -j ACCEPT -m comment --comment "ALLOW ESP FOR $i")
-                      _rulesvalueesp="Allowing ESP for $i"
+                      _rulesvalueesp="Allow ESP for $i"
                       rules "$_inputesp" "$_rulesvalueesp"                      
                       
                 done
