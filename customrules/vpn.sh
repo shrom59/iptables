@@ -23,7 +23,7 @@ then
 		      _inputpol=$(iptables -A INPUT -d $i -i eth0 -m policy --dir in --pol ipsec --reqid 1 --proto esp -j ACCEPT)
 		      _rulespol="Allow policy for $i"
 		      
-		      rules "$__inputpol" "$__rulespol"
+		      rules "$_inputpol" "$_rulespol"
 	
                       #UDP PORT 500
                       _inputudp500=$(iptables -A INPUT -i eth0 --src $i -p udp --sport 500 --dport 500 -j ACCEPT -m comment --comment "ALLOW IPSEC FOR $i ON PORT 500" 2>&1 >/dev/null)
