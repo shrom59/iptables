@@ -20,7 +20,7 @@ then
                 for i in $_vpnip
                 do    
 		      #policy rules
-		      _inputpol=$(iptables -A INPUT -d $i -i eth0 -m policy --dir in --pol ipsec --reqid 1 --proto esp -j ACCEPT)
+		      _inputpol=$(iptables -A INPUT --src $i -i eth0 -m policy --dir in --pol ipsec --reqid 1 --proto esp -j ACCEPT)
 		      _rulespol="Allow policy for $i"
 		      
 		      rules "$_inputpol" "$_rulespol"
