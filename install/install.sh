@@ -34,7 +34,6 @@ packages iptables
 packages ipcalc
 packages dpkg
 packages grep
-packages ip6tables
 
 if [ "$_installerr" = "1" ]; #we have check all need package and we quit if all package are not installed.
 then
