@@ -5,38 +5,19 @@ _ip=1
 
 echo "###### VPN TRANSPORT RULES #####"
 
-fileexist $_ipconf;
-
-
-if [ $exist -eq 1 ];
-then
-  paramfind "vpn" "$_ipconf"
-	_vpnip="$_param"
-
-	if [ -z "$_vpnip" ];
-        then
-                echo -e "$_noip"
-        else
-                for i in $_vpnip
-                do    
-	
                       #UDP PORT 500
-                      _inputudp500=$(iptables -A INPUT -i eth0 --src $i -p udp --sport 500 --dport 500 -j ACCEPT -m comment --comment "ALLOW IPSEC FOR $i ON PORT 500" 2>&1 >/dev/null)
-                      _rulesvalue500="Allow IPSEC for $i on 500 port"
+                      _inputudp500=$(iptables -A INPUT -i eth0 -p udp --sport 500 --dport 500 -j ACCEPT -m comment --comment "ALLOW IPSEC ON PORT 500" 2>&1 >/dev/null)
+                      _rulesvalue500="Allow IPSEC for on 500 port"
 
                       rules "$_inputudp500" "$_rulesvalue500"
 
                       #UDP PORT 4500
-                      _inputudp4500=$(iptables -A INPUT -i eth0 --src $i -p udp --sport 4500 --dport 4500 -j ACCEPT -m comment --comment "ALLOW IPSEC FOR $i ON PORT 4500" 2>&1  >/dev/null)
-                      _rulesvalue4500="Allow IPSEC for $i on 4500 port"
+                      _inputudp4500=$(iptables -A INPUT -i eth0 -p udp --sport 4500 --dport 4500 -j ACCEPT -m comment --comment "ALLOW IPSEC ON PORT 4500" 2>&1  >/dev/null)
+                      _rulesvalue4500="Allow IPSEC on 4500 port"
                       rules "$_inputudp4500" "$_rulesvalue4500"
 		      
                       ##ESP
-                      _inputesp=$(iptables -A INPUT -i eth0 --src $i -p esp -j ACCEPT -m comment --comment "ALLOW ESP FOR $i")
-                      _rulesvalueesp="Allow ESP for $i"
+                      _inputesp=$(iptables -A INPUT -i eth0 -p esp -j ACCEPT -m comment --comment "ALLOW ESP")
+                      _rulesvalueesp="Allow ESP
                       rules "$_inputesp" "$_rulesvalueesp"                      
-                      
-                done
-        fi
-fi
 }
