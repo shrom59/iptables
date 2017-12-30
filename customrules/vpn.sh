@@ -16,6 +16,6 @@ echo "###### VPN TRANSPORT RULES #####"
 		      
                       ##ESP
                       _inputesp=$(iptables -A INPUT -i eth0 -p esp -j ACCEPT -m comment --comment "ALLOW ESP")
-                      _rulesvalueesp="Allow ESP
+                      _rulesvalueesp="Allow ESP"
                       rules "$_inputesp" "$_rulesvalueesp"                      
 }
