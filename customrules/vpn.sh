@@ -1,8 +1,6 @@
 #This rule will allow all UDP connection (inclunding ESP) for strongswan VPN in transport mode
 vpn(){
 
-_ip=1
-
 echo "###### VPN TRANSPORT RULES #####"
 
                       #UDP PORT 500
