@@ -16,8 +16,14 @@ then
         else
                 for i in $_torrentport
                 do
-			_torrentrule=$(iptables -t filter -A INPUT -p tcp --dport $i -j ACCEPT -m comment --comment "TORRENT INPUT RULES ON $i PORT" 2>&1 >/dev/null) 
-			_rulesvalue="Torrent Input traffic on $i port"
+			_torrentrule=$(iptables -t filter -A INPUT -p tcp --dport $i -j ACCEPT -m comment --comment "TORRENT INPUT TCP RULES ON $i PORT" 2>&1 >/dev/null) 
+			_rulesvalue="Torrent input TCP traffic on $i port"
+			rules "$_torrentrule" "$_rulesvalue"
+		done
+		for i in $_torrentport
+                do
+			_torrentrule=$(iptables -t filter -A INPUT -p UDP --dport $i -j ACCEPT -m comment --comment "TORRENT INPUT UDP RULES ON $i PORT" 2>&1 >/dev/null) 
+			_rulesvalue="Torrent input UDP traffic on $i port"
 			rules "$_torrentrule" "$_rulesvalue"
 		done
 	fi
