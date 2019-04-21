@@ -11,6 +11,7 @@ _rulespath="$_basepath""rules/"
 
 _ipconf="$_basepath""ipconf"
 _portconf="$_basepath""portconf"
+_wgconf="$_basepath""wgconf"
 
 _rulesapplied="$_dcolor""$_accon""$_gcolor"" APPLIED ""$_dcolor""$_accoff"
 _rulesnotapplied="$_dcolor""$_accon""$_rcolor"" NOT APPLIED ""$_dcolor""$_accoff"

@@ -48,12 +48,38 @@ IP(s) or Hostname(s) : " _serverip
 	esac
 }
 
+wgcheck () {
+
+#### WG checking ####
+
+_wgneeded=$(cat ../customrules/"$_customrules".sh |grep "_wg=" |cut -d "=" -f 2)
+_wg=0
+case $_wgneeded in
+	1)
+		read -e -p "Enter the VPN interface name (type 'c' to cancel)?
+VPN interface name : " _vpnintname
+		read -e -p "Enter the interface name where VPN will be bound to (type 'c' to cancel)?
+Bound interface name : " _boundintname
+
+		wgadd $_vpnintname $_boundintname
+	;;
+	*)
+		echo -e "$_gcolor""No wg interface name need to be parameters here""$_dcolor"
+		_wg=1
+	;;
+	esac
+}
+
+
 case "$1" in 
 	port)
 		portcheck
 	;;
 	ip)
 		ipcheck
+	;;
+	wg)
+		wgcheck
 	;;
 	*)
 		portcheck
@@ -71,10 +97,23 @@ case "$1" in
 		ipcheck
 			while true
                         do
-                                if [ $_ip -eq 0 ] ; #If the port is not numeric we loop until valid number is entered to avoid unreachable server after installation
+                                if [ $_ip -eq 0 ] ; #If the ip is not in good format we loop until valid number is entered to avoid unreachable server after installation
                                 then
                                         echo -e "$_rcolor""A correct IP configuration is required for this rule""$_dcolor"
                                         checkipport "ip"
+                                        continue #Loop until a port is placed.
+                                else
+                                break #We continue the install.
+                                fi
+
+                        done
+		wgcheck
+			while true
+                        do
+                                if [ $_wg -eq 0 ] ; #If the wg correct we loop until valid number is entered to avoid unreachable server after installation
+                                then
+                                        echo -e "$_rcolor""A correct WG configuration is required for this rule""$_dcolor"
+                                        checkipport "wg"
                                         continue #Loop until a port is placed.
                                 else
                                 break #We continue the install.

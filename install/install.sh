@@ -11,6 +11,7 @@ _tmpcurrent=$(pwd)
 _current="$_tmpcurrent""/"
 _portconf=portconf #Name of the portconf file (your application port will be stored in this)
 _ipconf=ipconf #Name of the ipconf file (your application ip will be stored in this)
+_wgconf=wgconf #Name of the wgconf file (specific for wireguard rule)
 
 #################### Needed functions ###################
   
@@ -21,6 +22,7 @@ source "$_current"packages.sh
 source "$_current"checkipport.sh
 source "$_current"ipadd.sh
 source "$_current"endline.sh
+source "$_current"wgadd.sh
 
 #################### End of needed functions ###################
 
@@ -228,7 +230,6 @@ fi
 
 _customruleslist=$(ls -1 "$_current"../customrules)
 
-_portconf=portconf #Name of the portconf file (your application port will be stored in this)
 while true 
 do
 	echo -e "Custom firewall rules availables : "
@@ -256,8 +257,23 @@ Rules : " _customrules #We ask if you want to and some rules or delete it
 			continue
 		elif [ -e "$_current"../customrules/$_customrules.sh ];
 		then
+			if [ "$_customrules" = "wireguard" ];
+			then
+				if [ ! -e "$_installdir"/"$_wgconf" ]; #if the $_wgconf file doesn't exist we create it and initiate it
+				then
+				        touch "$_installdir"/"$_wgconf"
+			                if [ ! -e  "$_installdir"/"$_wgconf" ]; #if the config file does not exist, we exit the install beacause its required.
+			                then
+                        			echo -e "$_rcolor""The ""$_installdir"/"$_wgconf" "file has not been created. Are you root ?""$_dcolor"
+			                        echo -e "$_rcolor""This rule can't be installed.""$_dcolor"
+			                        continue
+			                fi
+				fi
+			fi
+			
 			checkipport
 			rulecopy
+
 			while true
 			do
 				if [ "$_port" = "nok" ]; #If the port is not numeric we loop until valid number is entered to avoid unreachable server after installation
