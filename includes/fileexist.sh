@@ -7,7 +7,7 @@ fileexist (){
 if [ ! -f "$1" ];
 then
 	exist=0;
-	echo -e "$_rcolor""$_rulesnotapplied""$_dcolor""$_accon""$_rcolor""NOT APPLIED""$_dcolor""$_accoff""The" "$1" "file doesn't exist.you have to check it first"
+	echo -e "$_dcolor""$_accon""$_rcolor"" NOT APPLIED ""$_dcolor""$_accoff""The" "$1" "file doesn't exist.you have to check it first"
 else
 	exist=1;
 fi
