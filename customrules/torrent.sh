@@ -22,7 +22,7 @@ then
 		done
 		for i in $_torrentport
                 do
-			_torrentrule=$(iptables -t filter -A INPUT -p udo --dport $i -j ACCEPT -m comment --comment "TORRENT INPUT UDP ON $i PORT" 2>&1 >/dev/null) 
+			_torrentrule=$(iptables -t filter -A INPUT -p udp --dport $i -j ACCEPT -m comment --comment "TORRENT INPUT UDP ON $i PORT" 2>&1 >/dev/null) 
 			_rulesvalue="Torrent input UDP on $i port"
 			rules "$_torrentrule" "$_rulesvalue"
 		done
